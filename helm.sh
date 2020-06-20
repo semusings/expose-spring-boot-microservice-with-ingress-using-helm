@@ -27,8 +27,7 @@ case ${option} in
    --deploy)
         helm upgrade \
         --install -f $CHART_DIR/values.yaml \
-        --set spring.profiles.active=dev \
-        --set springbootdb.enabled=false \
+        --set ingress.enabled=true \
         $DEPLOYMENT $CHART_DIR --force
       ;;
    --addons)
@@ -37,6 +36,19 @@ case ${option} in
       ;;
    --delete)
       helm delete $DEPLOYMENT
+      ;;
+    --resolvconf)
+      minikube ip
+      sudo apt install resolvconf
+      sudo gedit /etc/resolvconf/resolv.conf.d/head
+      nameserver 172.17.0.2
+      sudo resolvconf -u
+      # Each restart you need to add nameserver
+      ;;
+    --host)
+      minikube ip
+      sudo gedit /etc/hosts
+      # Each restart you need to add nameserver
       ;;
    *)
       echo "`basename ${0}`:usage: [--deploy] | [--addons] | [--delete]"
