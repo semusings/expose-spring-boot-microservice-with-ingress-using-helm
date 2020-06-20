@@ -31,11 +31,15 @@ case ${option} in
         --set springbootdb.enabled=false \
         $DEPLOYMENT $CHART_DIR --force
       ;;
+   --addons)
+      minikube addons enable ingress
+      minikube addons enable ingress-dns
+      ;;
    --delete)
       helm delete $DEPLOYMENT
       ;;
    *)
-      echo "`basename ${0}`:usage: [--deploy] | [--delete]"
+      echo "`basename ${0}`:usage: [--deploy] | [--addons] | [--delete]"
       exit 1 # Command to come out of the program with status 1
       ;;
 esac

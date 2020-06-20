@@ -19,6 +19,9 @@ build: ## Build
 start: ## Minikube start
 	minikube start
 
+addons: ## Minikube addons
+	./helm.sh --addons
+
 deploy: ## Helm deploy
 	./helm.sh --deploy
 
